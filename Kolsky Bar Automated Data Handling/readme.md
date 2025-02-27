@@ -1,0 +1,1 @@
+Creating an automated data handling system for the Kolsky Bar. Harrison Park's first attempt at creating a repository. This will try to integrate an old Kolsky bar analysis procedural code into the tchufnagel group repository. 
