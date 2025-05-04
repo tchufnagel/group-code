@@ -1,0 +1,46 @@
+!pip install xraylib 
+import xraylib
+import math
+
+def calculate_mass_attenuation_coefficient(Z, energy_keV):
+    """
+    Get mass attenuation coefficient (μ/ρ) for an element
+    Inputs:
+        Z: Atomic number of element
+        energy_keV: X-ray photon energy
+    Returns:
+        μ/ρ in cm²/g
+    """
+    return xraylib.CS_Total(Z, energy_keV)
+
+def calculate_absorption_length(mu_mass_cm2_g, density_g_cm3):
+    """
+    Calculate the absorption length in cm
+    Inputs:
+        mu_mass_cm2_g: mass attenuation coefficient (cm²/g)
+        density_g_cm3: density (g/cm³)
+    Returns:
+        absorption length in cm
+    """
+    mu_linear_cm_inv = mu_mass_cm2_g * density_g_cm3  # cm⁻¹
+    if mu_linear_cm_inv == 0:
+        return float('inf')
+    return 1.0 / mu_linear_cm_inv  # cm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#User input
+Z = 26                 # Aluminum
+energy_keV = 24.7        # Photon energy in keV
+density_g_cm3 = 7.874    # Aluminum density
+
+
+
+
+mu_mass = calculate_mass_attenuation_coefficient(Z, energy_keV)
+abs_length = calculate_absorption_length(mu_mass, density_g_cm3)
+
+element = xraylib.AtomicNumberToSymbol(Z)
+print(f"Element: {element} (Z = {Z})")
+print(f"Energy: {energy_keV} keV")
+print(f"Mass attenuation coefficient: {mu_mass:.4f} cm²/g")
+print(f"Absorption length: {abs_length:.4f} cm")
